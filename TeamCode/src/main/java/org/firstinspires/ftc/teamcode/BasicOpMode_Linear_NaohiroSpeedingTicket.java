@@ -27,7 +27,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.firstinspires.ftc.teamcode.teleop;
+package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -67,7 +67,9 @@ public class BasicOpMode_Linear_NaohiroSpeedingTicket extends LinearOpMode {
 
     private DcMotor lbDrive = null;
 
+
     private Servo FirstClaw = null;
+
 
     IMU imu;
 
@@ -80,6 +82,7 @@ public class BasicOpMode_Linear_NaohiroSpeedingTicket extends LinearOpMode {
         // to 'get' must correspond to the names assigned during the robot configuration
         // step (using the FTC Robot Controller app on the phone).
         imu = hardwareMap.get(IMU.class, "imu");
+
         lfDrive  = hardwareMap.get(DcMotor.class, "lf_motor");
         rfDrive = hardwareMap.get(DcMotor.class, "rf_motor");
         rbDrive  = hardwareMap.get(DcMotor.class, "rb_motor");
@@ -90,15 +93,32 @@ public class BasicOpMode_Linear_NaohiroSpeedingTicket extends LinearOpMode {
         RevHubOrientationOnRobot.LogoFacingDirection logoDirection = RevHubOrientationOnRobot.LogoFacingDirection.UP;
         RevHubOrientationOnRobot.UsbFacingDirection  usbDirection  = RevHubOrientationOnRobot.UsbFacingDirection.FORWARD;
 
+        lfDrive  = hardwareMap.get(DcMotor.class, "lf_drive");
+        rfDrive = hardwareMap.get(DcMotor.class, "rf_drive");
+        rbDrive  = hardwareMap.get(DcMotor.class, "rb_drive");
+        lbDrive  = hardwareMap.get(DcMotor.class, "lb_drive");
+        // FirstClaw  = hardwareMap.get(Servo.class, "GoodServo");
+        // FirstClaw.setPosition(0);
+
+
+
+
         RevHubOrientationOnRobot orientationOnRobot = new RevHubOrientationOnRobot(logoDirection, usbDirection);
         imu.initialize(new IMU.Parameters(orientationOnRobot));
         // To drive forward, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
         // Pushing the left stick forward MUST make robot go forward. So adjust these two lines based on your first test drive.
         // Note: The settings here assume direct drive on left and right wheels.  Gear Reduction or 90 Deg drives may require direction flips
+
         lfDrive.setDirection(DcMotor.Direction.REVERSE);
         rfDrive.setDirection(DcMotor.Direction.REVERSE);
         lbDrive.setDirection(DcMotor.Direction.REVERSE);
         rbDrive.setDirection(DcMotor.Direction.REVERSE);
+
+        lfDrive.setDirection(DcMotor.Direction.FORWARD);
+        rfDrive.setDirection(DcMotor.Direction.FORWARD);
+        lbDrive.setDirection(DcMotor.Direction.FORWARD);
+        rbDrive.setDirection(DcMotor.Direction.FORWARD);
+
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
@@ -117,9 +137,12 @@ public class BasicOpMode_Linear_NaohiroSpeedingTicket extends LinearOpMode {
 
             // POV Mode uses left stick to go forward, and right stick to turn.
             // - This uses basic math to combine motions and is easier to drive straight.
-            double drive = gamepad1.right_stick_x * 0.75;
-            double strafe = gamepad1.left_stick_x * 0.75;
-            double turn = -gamepad1.left_stick_y * 0.75;
+
+
+            double turn = -gamepad1.left_stick_y / 2;
+            double strafe = gamepad1.left_stick_x / 2;
+            double drive  =  gamepad1.right_stick_x / 2;
+
             lfPower   = Range.clip(drive + turn + strafe, -1.0, 1.0) ;
             rfPower   = Range.clip(drive - turn + strafe, -1.0, 1.0) ;
             rbPower   = Range.clip(drive - turn - strafe, -1.0, 1.0) ;
@@ -137,7 +160,11 @@ public class BasicOpMode_Linear_NaohiroSpeedingTicket extends LinearOpMode {
             lbDrive.setPower(lbPower);
             rbDrive.setPower(rbPower);
 
-              if (gamepad1.dpad_up)
+
+
+
+              /*if (gamepad1.dpad_up)
+
             {
                 FirstClaw.setPosition(0.999);
                 sleep(2000);
@@ -146,7 +173,9 @@ public class BasicOpMode_Linear_NaohiroSpeedingTicket extends LinearOpMode {
             {
                FirstClaw.setPosition(0);
                 sleep(2000);
-            }
+
+            }*/
+
 
 
             // Show the elapsed game time and wheel power.
