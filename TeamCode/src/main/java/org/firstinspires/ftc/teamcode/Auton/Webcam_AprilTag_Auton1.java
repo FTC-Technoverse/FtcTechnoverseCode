@@ -21,7 +21,6 @@
 
 package org.firstinspires.ftc.teamcode.Auton;
 
-import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -42,7 +41,6 @@ import java.util.ArrayList;
 
 
 @Autonomous
-@Config
 public class Webcam_AprilTag_Auton1 extends LinearOpMode
 {
     private ElapsedTime runtime = new ElapsedTime();

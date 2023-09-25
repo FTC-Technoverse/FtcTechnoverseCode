@@ -67,7 +67,7 @@ public class BasicOpMode_Linear_NaohiroSpeedingTicket extends LinearOpMode {
 
     private DcMotor lbDrive = null;
 
-    private Servo FirstClaw = null;
+    //private Servo FirstClaw = null;
 
     IMU imu;
 
@@ -80,12 +80,12 @@ public class BasicOpMode_Linear_NaohiroSpeedingTicket extends LinearOpMode {
         // to 'get' must correspond to the names assigned during the robot configuration
         // step (using the FTC Robot Controller app on the phone).
         imu = hardwareMap.get(IMU.class, "imu");
-        lfDrive  = hardwareMap.get(DcMotor.class, "lf_motor");
-        rfDrive = hardwareMap.get(DcMotor.class, "rf_motor");
-        rbDrive  = hardwareMap.get(DcMotor.class, "rb_motor");
-        lbDrive  = hardwareMap.get(DcMotor.class, "lb_motor");
-        FirstClaw  = hardwareMap.get(Servo.class, "GoodServo");
-        FirstClaw.setPosition(0);
+        lfDrive  = hardwareMap.get(DcMotor.class, "lf_drive");
+        rfDrive = hardwareMap.get(DcMotor.class, "rf_drive");
+        rbDrive  = hardwareMap.get(DcMotor.class, "rb_drive");
+        lbDrive  = hardwareMap.get(DcMotor.class, "lb_drive");
+        //FirstClaw  = hardwareMap.get(Servo.class, "GoodServo");
+        //FirstClaw.setPosition(0);
 
         RevHubOrientationOnRobot.LogoFacingDirection logoDirection = RevHubOrientationOnRobot.LogoFacingDirection.UP;
         RevHubOrientationOnRobot.UsbFacingDirection  usbDirection  = RevHubOrientationOnRobot.UsbFacingDirection.FORWARD;
@@ -137,7 +137,7 @@ public class BasicOpMode_Linear_NaohiroSpeedingTicket extends LinearOpMode {
             lbDrive.setPower(lbPower);
             rbDrive.setPower(rbPower);
 
-              if (gamepad1.dpad_up)
+              /*if (gamepad1.dpad_up)
             {
                 FirstClaw.setPosition(0.999);
                 sleep(2000);
@@ -146,7 +146,7 @@ public class BasicOpMode_Linear_NaohiroSpeedingTicket extends LinearOpMode {
             {
                FirstClaw.setPosition(0);
                 sleep(2000);
-            }
+            }*/
 
 
             // Show the elapsed game time and wheel power.

@@ -87,17 +87,17 @@ public class RobotAutoDriveByEncoderLinearField1 extends LinearOpMode {
     static final double     WHEEL_DIAMETER_INCHES   = 3.78 ;     // For figuring circumference
     static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
                                                       (WHEEL_DIAMETER_INCHES * 3.1415);
-    static final double     DRIVE_SPEED             = 0.5;
-    static final double     TURN_SPEED              = 0.5;
+    static final double     DRIVE_SPEED             = 0.3;
+    static final double     TURN_SPEED              = 0.3;
 
     @Override
     public void runOpMode() {
 
         // Initialize the drive system variables.
-        lfDrive  = hardwareMap.get(DcMotor.class, "lf_motor");
-        rfDrive = hardwareMap.get(DcMotor.class, "rf_motor");
-        rbDrive  = hardwareMap.get(DcMotor.class, "rb_motor");
-        lbDrive  = hardwareMap.get(DcMotor.class, "lb_motor");
+        lfDrive  = hardwareMap.get(DcMotor.class, "lf_drive");
+        rfDrive = hardwareMap.get(DcMotor.class, "rf_drive");
+        rbDrive  = hardwareMap.get(DcMotor.class, "rb_drive");
+        lbDrive  = hardwareMap.get(DcMotor.class, "lb_drive");
 
         // To drive forward, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
         // When run, this OpMode should start both motors driving forward. So adjust these two lines based on your first test drive.
@@ -143,12 +143,12 @@ public class RobotAutoDriveByEncoderLinearField1 extends LinearOpMode {
 
         // we want the robot to go forward 3 feet. turn right 90 degrees. and go forward 8 feet
 
-        encoderDrive(DRIVE_SPEED, 36, 36, 36, 36, 5.0);
-        encoderDrive(TURN_SPEED, -12, -12, -12, -12, 4.0);
-        encoderDrive(DRIVE_SPEED, 96, 96, 96, 96, 4.0);
+        encoderDrive(DRIVE_SPEED, 10, 10, 10, 10, 0.45);
+        encoderDrive(TURN_SPEED, 10, -10, 10, -10, 0.505);
+        encoderDrive(DRIVE_SPEED, 10, 10, 10, 10, 1.2);
 
-        encoderDrive(DRIVE_SPEED, -36, 36, 36, -36, 5.0);
-        encoderDrive(DRIVE_SPEED, 96, 96, 96, 96, 4.0);
+        //encoderDrive(DRIVE_SPEED, -36, 36, 36, -36, 5.0);
+        //encoderDrive(DRIVE_SPEED, 96, 96, 96, 96, 4.0);
 
         telemetry.addData("Path", "Complete");
         telemetry.update();
@@ -228,7 +228,7 @@ public class RobotAutoDriveByEncoderLinearField1 extends LinearOpMode {
             lbDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             rbDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-            sleep(60000);   // optional pause after each move.
+            sleep(1000);   // optional pause after each move.
         }
     }
 }

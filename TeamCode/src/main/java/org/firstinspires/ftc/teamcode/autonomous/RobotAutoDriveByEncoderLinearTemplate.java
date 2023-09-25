@@ -94,10 +94,10 @@ public class RobotAutoDriveByEncoderLinearTemplate extends LinearOpMode {
     public void runOpMode() {
 
         // Initialize the drive system variables.
-        lfDrive  = hardwareMap.get(DcMotor.class, "lf_motor");
-        rfDrive = hardwareMap.get(DcMotor.class, "rf_motor");
-        rbDrive  = hardwareMap.get(DcMotor.class, "rb_motor");
-        lbDrive  = hardwareMap.get(DcMotor.class, "lb_motor");
+        lfDrive  = hardwareMap.get(DcMotor.class, "lf_drive");
+        rfDrive = hardwareMap.get(DcMotor.class, "rf_drive");
+        rbDrive  = hardwareMap.get(DcMotor.class, "rb_drive");
+        lbDrive  = hardwareMap.get(DcMotor.class, "lb_drive");
 
         // To drive forward, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
         // When run, this OpMode should start both motors driving forward. So adjust these two lines based on your first test drive.
