@@ -30,6 +30,7 @@
 package org.firstinspires.ftc.teamcode.autonomous;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -60,8 +61,9 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@Autonomous(name="Robot: Auto Drive By Encoder", group="Robot")
-public class RobotAutoDriveByEncoderLinear extends LinearOpMode {
+@Autonomous(name="TEMPLATE-AutoDriveByEncoder", group="Robot")
+@Disabled
+public class RobotAutoDriveByEncoderLinearTemplate extends LinearOpMode {
 
     /* Declare OpMode members. */
     private DcMotor lfDrive = null;
@@ -128,6 +130,17 @@ public class RobotAutoDriveByEncoderLinear extends LinearOpMode {
 
         // Step through each leg of the path,
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
+
+        // Team Note: DRIVE_SPEED IS FOR FORWARD AND BACK MOVEMENT.
+        // Positive numbers are Forward and Negative numbers are Backward
+
+        // Team Note: TURN_SPEED IS FOR TURNING THE ROBOT LEFT AND RIGHT
+        // Positive numbers are for Left and Negative numbers are for Right
+
+        // Team Note: to strafe, the two wheels in the direction you want to go turn inwards and the other wheels turn outwards
+        // to strafe right, use DRIVE_SPEED, lfInches and rbInches are positive, and lbInches and rfInches are negative.
+        // to strafe left, use DRIVE_SPEED, lfInches and rbInches are negative, and lbInches and rfInches are positive.
+
         encoderDrive(DRIVE_SPEED, 48, 48, 48, 48, 5.0);  // S1: Forward 47 Inches with 5 Sec timeout
         encoderDrive(TURN_SPEED, -12, -12, -12, -12, 4.0);  // S2: Turn Right 12 Inches with 4 Sec timeout
         encoderDrive(DRIVE_SPEED, -24, -24, -24, -24, 4.0);  // S3: Reverse 24 Inches with 4 Sec timeout
