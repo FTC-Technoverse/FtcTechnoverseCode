@@ -1,11 +1,13 @@
 package org.firstinspires.ftc.teamcode.autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import static android.os.SystemClock.sleep;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
-@TeleOp(name = "Encodercode working ")
+@Autonomous(name = "Encodercode working ")
 public class prac_Encade_works extends OpMode {
     DcMotor lf_drive;
     DcMotor rf_drive;
@@ -13,8 +15,8 @@ public class prac_Encade_works extends OpMode {
 //    DcMotor rb_drive;
 
     double ticks = 537.7;
-    double newTargetlf;
-    double newTargetrf;
+    double newTargetlf, newTargetrf;
+
     @Override
     public void init() {
         lf_drive = hardwareMap.get(DcMotor.class,"lf_drive");
@@ -31,15 +33,22 @@ public class prac_Encade_works extends OpMode {
 
     @Override
     public void loop() {
-        if (gamepad1.a) {
-            encoder(1,1);
-            
-        }
 
     }
 
+    public void start() {
+        encoder(1,1);
 
+        boolean movementInProgress = true;
 
+        while (movementInProgress = true) {
+            if (lf_drive.isBusy() && rf_drive.isBusy()) {
+
+            } else {
+                movementInProgress = false;
+            }
+        }
+    }
 
 
     public  void  encoder(double turnage1,double turnage2){
