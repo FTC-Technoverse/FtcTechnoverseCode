@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+import org.firstinspires.ftc.robotcore.internal.system.AppUtil;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
@@ -44,10 +45,24 @@ public class TeamPropAuton extends OpMode {
 
         // Initialize the camera hardware
         camera = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, cameraName));
+        // camera.setCameraRotation(OpenCvCameraRotation.UPRIGHT);
+        camera.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener() {
+            @Override
+            public void onOpened() {
+                camera.startStreaming(320,640, OpenCvCameraRotation.UPRIGHT);
+            }
+
+            @Override
+            public void onError(int errorCode) {
+
+            }
+        });
 
         // Set the active camera pipeline
         teamPropPipeline = new TeamPropDetect();
         camera.setPipeline(teamPropPipeline);
+        //camera.startStreaming(320, 640, OpenCvCameraRotation.UPRIGHT);
+        //AppUtil.getInstance().startCamera(camera);
     }
 
     @Override
