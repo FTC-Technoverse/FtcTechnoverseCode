@@ -17,10 +17,13 @@ public class TeamPropAuton extends OpMode {
     private OpenCvCamera camera;
     private TeamPropDetect teamPropPipeline;
 
-    // Constants for encoder counts and movement speed
-    private static final double COUNTS_PER_REVOLUTION = 537.7; // Adjust for your motor
-    private static final double WHEEL_DIAMETER_INCHES = 3.78; // Adjust for your wheels
-    private static final double DRIVE_SPEED = 0.6;
+    private static final double DRIVE_SPEED = 0.5;
+    private static final double TURN_SPEED = 0.5;
+    private static final long DRIVE_TIME = 10000;
+    private static final double TARGET_X = 160; // Adjust the target X-coordinate as needed
+    private static final double X_THRESHOLD = 10; // Adjust the threshold for X-coordinate detection
+
+    private long startTime;
 
     @Override
     public void init() {
@@ -36,12 +39,6 @@ public class TeamPropAuton extends OpMode {
         // lb_drive.setDirection(DcMotor.Direction.REVERSE);
         // rb_drive.setDirection(DcMotor.Direction.FORWARD);
 
-        // Initialize motor run modes
-        lf_drive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        rf_drive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        lb_drive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        rb_drive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
         // Specify the camera name from your robot configuration
         String cameraName = "Technoverse Cam"; // Replace with the actual camera name
 
@@ -55,89 +52,53 @@ public class TeamPropAuton extends OpMode {
 
     @Override
     public void start() {
-        // Configure camera settings (e.g., resolution and rotation)
-        camera.openCameraDevice();
-        camera.startStreaming(320, 240, OpenCvCameraRotation.UPRIGHT);
+        startTime = System.currentTimeMillis();
     }
 
     @Override
     public void loop() {
-        // If the team prop is detected, navigate to it
-        if (teamPropPipeline.isObjectDetected()) {
-            // Calculate the distance to move based on the detected X-coordinate
-            double teamPropX = teamPropPipeline.getObjectLocation().x;
-            double distanceToMove = calculateDistanceToMove(teamPropX);
+        long currentTime = System.currentTimeMillis();
+        long elapsedTime = currentTime - startTime;
 
-            // Move to the team prop
-            if (distanceToMove > 0) {
-                driveForward(distanceToMove);
+        if (elapsedTime < DRIVE_TIME) {
+            if (teamPropPipeline.isObjectDetected()) {
+                double teamPropX = teamPropPipeline.getObjectLocation().x;
+
+                if (Math.abs(teamPropX - TARGET_X) > X_THRESHOLD) {
+                    // Turn the robot to align with the team prop
+                    if (teamPropX < TARGET_X) {
+                        // Turn left
+                        lf_drive.setPower(-TURN_SPEED);
+                        rf_drive.setPower(TURN_SPEED);
+                        lb_drive.setPower(-TURN_SPEED);
+                        rb_drive.setPower(TURN_SPEED);
+                    } else {
+                        // Turn right
+                        lf_drive.setPower(TURN_SPEED);
+                        rf_drive.setPower(-TURN_SPEED);
+                        lb_drive.setPower(TURN_SPEED);
+                        rb_drive.setPower(-TURN_SPEED);
+                    }
+                } else {
+                    // Drive forward
+                    lf_drive.setPower(DRIVE_SPEED);
+                    rf_drive.setPower(DRIVE_SPEED);
+                    lb_drive.setPower(DRIVE_SPEED);
+                    rb_drive.setPower(DRIVE_SPEED);
+                }
+            } else {
+                // If no team prop is detected, stop the robot
+                lf_drive.setPower(0);
+                rf_drive.setPower(0);
+                lb_drive.setPower(0);
+                rb_drive.setPower(0);
             }
-
-            // Perform additional actions or tasks if needed
+        } else {
+            // Stop the robot after the specified drive time
+            lf_drive.setPower(0);
+            rf_drive.setPower(0);
+            lb_drive.setPower(0);
+            rb_drive.setPower(0);
         }
-    }
-
-    // Calculate the distance to move based on the detected X-coordinate
-    private double calculateDistanceToMove(double targetX) {
-        // Constants for camera and robot configuration
-        double targetXCenter = 160; // The X-coordinate at the center of the camera frame
-        double maxSpeed = 0.5; // Maximum speed for the robot
-        double proportionalConstant = 0.01; // Proportional control constant (adjust as needed)
-
-        // Calculate the error, which is the difference between the detected X-coordinate and the center
-        double error = targetXCenter - targetX;
-
-        // Calculate the motor power adjustment based on the error using proportional control
-        double powerAdjustment = error * proportionalConstant;
-
-        // Limit the power adjustment to stay within the maximum speed
-        powerAdjustment = Math.max(-maxSpeed, Math.min(maxSpeed, powerAdjustment));
-
-        // Calculate the distance to move based on the power adjustment
-        // The assumption here is that a non-zero power adjustment means there's an error in positioning
-        // You can further adjust this logic based on your robot's behavior
-        return (powerAdjustment != 0) ? 10.0 : 0.0; // 10 inches is an arbitrary distance
-    }
-
-
-
-    // Drive forward for a specified distance (in inches)
-    private void driveForward(double inches) {
-        int targetPosition = (int) (COUNTS_PER_REVOLUTION * inches / (WHEEL_DIAMETER_INCHES * Math.PI));
-
-        // Set the target position for all four motors
-        lf_drive.setTargetPosition(targetPosition);
-        rf_drive.setTargetPosition(targetPosition);
-        lb_drive.setTargetPosition(targetPosition);
-        rb_drive.setTargetPosition(targetPosition);
-
-        // Set the drive speed
-        lf_drive.setPower(DRIVE_SPEED);
-        rf_drive.setPower(DRIVE_SPEED);
-        lb_drive.setPower(DRIVE_SPEED);
-        rb_drive.setPower(DRIVE_SPEED);
-
-        // Set run-to-position mode
-        lf_drive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        rf_drive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        lb_drive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        rb_drive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-        // Wait until motors reach the target position
-        while (lf_drive.isBusy() || rf_drive.isBusy() || lb_drive.isBusy() || rb_drive.isBusy()) {
-            // You can add additional tasks or checks here
-        }
-
-        // Stop the motors
-        lf_drive.setPower(0);
-        rf_drive.setPower(0);
-        lb_drive.setPower(0);
-        rb_drive.setPower(0);
-
-        // Set the motors back to the original run mode
-        lf_drive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        rf_drive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        lb_drive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        rb_drive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 }
