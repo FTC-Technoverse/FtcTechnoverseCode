@@ -29,6 +29,7 @@
 
 package org.firstinspires.ftc.teamcode.autonomous;
 
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -49,8 +50,8 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * Remove or comment out the @Disabled line to add this OpMode to the Driver Station OpMode list
  */
 
-@TeleOp(name="Backdrop: Park", group="Linear OpMode")
-@Disabled
+@Autonomous(name="Backdrop: Park F4", group="Linear OpMode")
+//@Disabled
 public class Backdrop_Park_F4 extends LinearOpMode {
 
     // Declare OpMode members.

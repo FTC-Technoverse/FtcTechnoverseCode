@@ -29,6 +29,7 @@
 
 package org.firstinspires.ftc.teamcode.autonomous;
 
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -49,8 +50,8 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * Remove or comment out the @Disabled line to add this OpMode to the Driver Station OpMode list
  */
 
-@TeleOp(name="Backdrop: Park", group="Linear OpMode")
-@Disabled
+@Autonomous(name="Backdrop: Park A2", group="Linear OpMode")
+//@Disabled
 public class Backdrop_Park_A2 extends LinearOpMode {
 
     // Declare OpMode members.
@@ -119,7 +120,7 @@ public class Backdrop_Park_A2 extends LinearOpMode {
             rf_drive.setPower(0.5);
             lb_drive.setPower(0.5);
             rb_drive.setPower(0.5);
-            sleep(500);
+            sleep(890);
 
             // servo arm pixel spike
 
@@ -127,13 +128,16 @@ public class Backdrop_Park_A2 extends LinearOpMode {
             rf_drive.setPower(-0.5);
             lb_drive.setPower(-0.5);
             rb_drive.setPower(-0.5);
-            sleep(500);
+            sleep(880);
 
             lf_drive.setPower(-0.5);
             rf_drive.setPower(0.5);
             lb_drive.setPower(0.5);
             rb_drive.setPower(-0.5);
-            sleep(1000);
+            sleep(3250);
+
+
+            requestOpModeStop();
 
 
             // servo arm pixel backdrop
