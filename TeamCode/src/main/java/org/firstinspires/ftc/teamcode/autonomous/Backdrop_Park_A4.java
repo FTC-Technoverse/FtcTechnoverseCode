@@ -78,7 +78,7 @@ public class Backdrop_Park_A4 extends LinearOpMode {
         // Pushing the left stick forward MUST make robot go forward. So adjust these two lines based on your first test drive.
         // Note: The settings here assume direct drive on left and right wheels.  Gear Reduction or 90 Deg drives may require direction flips
         lf_drive.setDirection(DcMotor.Direction.REVERSE);
-        rf_drive.setDirection(DcMotor.Direction.FORWARD);
+        rf_drive.setDirection(DcMotor.Direction.REVERSE);
         lb_drive.setDirection(DcMotor.Direction.REVERSE);
         rb_drive.setDirection(DcMotor.Direction.FORWARD);
 
@@ -122,19 +122,19 @@ public class Backdrop_Park_A4 extends LinearOpMode {
             rb_drive.setPower(0.5);
             sleep(890);
 
-            lf_drive.setPower(0);
-            rf_drive.setPower(0);
-            lb_drive.setPower(0);
-            rb_drive.setPower(0);
-            sleep(1000);
+            //lf_drive.setPower(0);
+            //rf_drive.setPower(0);
+            //lb_drive.setPower(0);
+            //rb_drive.setPower(0);
+            //sleep(1000);
 
             // servo arm pixel spike
 
-            lf_drive.setPower(-0.5);
-            rf_drive.setPower(-0.5);
-            lb_drive.setPower(-0.5);
-            rb_drive.setPower(-0.5);
-            sleep(880);
+            //lf_drive.setPower(-0.5);
+            //rf_drive.setPower(-0.5);
+            //lb_drive.setPower(-0.5);
+            //rb_drive.setPower(-0.5);
+            //sleep(880);
 
             lf_drive.setPower(-0.5);
             rf_drive.setPower(0.5);
