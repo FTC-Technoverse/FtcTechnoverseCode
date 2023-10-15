@@ -120,7 +120,13 @@ public class Backdrop_Park_F2 extends LinearOpMode {
             rf_drive.setPower(0.5);
             lb_drive.setPower(0.5);
             rb_drive.setPower(0.5);
-            sleep(500);
+            sleep(890);
+
+            lf_drive.setPower(0);
+            rf_drive.setPower(0);
+            lb_drive.setPower(0);
+            rb_drive.setPower(0);
+            sleep(1000);
 
             // servo arm pixel spike
 
@@ -128,13 +134,13 @@ public class Backdrop_Park_F2 extends LinearOpMode {
             rf_drive.setPower(-0.5);
             lb_drive.setPower(-0.5);
             rb_drive.setPower(-0.5);
-            sleep(500);
+            sleep(880);
 
             lf_drive.setPower(0.5);
             rf_drive.setPower(-0.5);
             lb_drive.setPower(-0.5);
             rb_drive.setPower(0.5);
-            sleep(1000);
+            sleep(3300);
 
 
             // servo arm pixel backdrop
